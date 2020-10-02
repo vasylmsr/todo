@@ -13,7 +13,7 @@
             </el-button>
         </el-row>
       </el-col>
-      
+
 
       <el-col :xs="24" :sm="8">
         <el-input
@@ -51,6 +51,17 @@ import PageTitle from "./components/PageTitle";
 import TaskItem from "./components/TaskItem";
 import AddTask from "./components/AddTask";
 import { mapGetters, mapActions, mapMutations } from 'vuex';
+
+function sortTasksByText(arr) {
+  return Object.assign([], arr).sort((a,b) => {
+    a = a.text.toLowerCase();
+    b = b.text.toLowerCase();
+    if(a > b) return 1;
+    if(b > a) return -1;
+    return 0;
+  });
+}
+
 export default {
   name: 'App',
   components: {
@@ -60,19 +71,16 @@ export default {
   },
   data() {
     return {
-      searchText: null,
+      searchText: '',
       isVisibleNewTaskForm: false
     }
   },
   computed: {
     ...mapGetters(['tasks']),
     sortedTasks() {
-      if (!this.searchText || !this.searchText.length) return this.sortTasksByText(this.tasks);
-      let foundTasksByText = this.tasks.filter(task =>  {
-        if(task.text.toLowerCase().indexOf(this.searchText.toLowerCase()) >= 0) {
-          return task;
-        }
-      });
+      if (!this.searchText.length) return this.sortTasksByText(this.tasks);
+      let foundTasksByText = this.tasks.filter(task =>
+        task.text.toLowerCase().indexOf(this.searchText.toLowerCase()) >= 0 && task);
       return this.sortTasksByText(foundTasksByText);
     }
   },
@@ -82,19 +90,7 @@ export default {
     toggleVisibilityOfNewTaskForm() {
       this.isVisibleNewTaskForm = !this.isVisibleNewTaskForm;
     },
-    sortTasksByText(arr) {
-      return Object.assign([], arr).sort((a,b) => {
-        a = a.text.toLowerCase();
-        b = b.text.toLowerCase();
-        if(a > b) {
-          return 1;
-        }
-        if(b > a) {
-          return -1
-        }
-        return 0;
-      });
-    }
+    sortTasksByText
   },
   async created() {
     await this.fetchTasks();
@@ -116,7 +112,7 @@ export default {
     margin-top: 20px;
   }
 
-  @media only screen and (max-width: 767px) {
+  @media only screen and (max-width: 768px) {
     .panel__buttons {
       margin-bottom: 20px;
 

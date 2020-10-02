@@ -1,19 +1,35 @@
 <template>
   <el-row type="flex" class="task">
-    <el-col class="task__text-wrapper " :span="10">
+    <el-col class="task__text-wrapper" :span="10">
       <text-input
-          @input="(value) => editableTask.text = value"
-          :value="task.text"
-          :is-editable="isEditable"
+        v-if="isEditable"
+        v-model="editableTask.text"
       />
+      <span
+        v-else
+        class="task__text"
+      >
+        {{ task.text }}
+      </span>
     </el-col>
     <el-col>
-      <el-button :type="editType.buttonType" @click="handleEditingAndSaving">
-        {{ editType.buttonText }}
-      </el-button>
-      <el-button :type="cancelType.buttonType" @click="handleCancelingAndDeleting">
-        {{ cancelType.buttonText }}
-      </el-button>
+      <template v-if="isEditable">
+        <el-button type="success" @click="editItem">
+          Save
+        </el-button>
+        <el-button type="warning" @click="closeEditModeAndSetOldValue">
+          Cancel
+        </el-button>
+      </template>
+
+      <template v-else>
+        <el-button type="success" @click="openEditMode">
+          Edit
+        </el-button>
+        <el-button type="danger" @click="deleteItem">
+          Delete
+        </el-button>
+      </template>
     </el-col>
   </el-row>
 </template>
@@ -37,34 +53,27 @@
         isEditable: false
       }
     },
-    computed: {
-      editType() {
-        return this.isEditable
-          ? { buttonType: "success", buttonText: "Save" }
-          : { buttonType: "warning", buttonText: "Edit" }
-      },
-      cancelType() {
-        return this.isEditable
-          ? { buttonType: "danger", buttonText: "Cancel" }
-          : { buttonType: "danger", buttonText: "Delete" }
-      }
-    },
     methods: {
-      handleEditingAndSaving() {
-        if(this.isEditable) {
-          this.$emit('edit', { ...this.editableTask });
-        }
-        this.isEditable = !this.isEditable;
+      openEditMode() {
+        this.isEditable = true;
       },
-      handleCancelingAndDeleting() {
-        if(this.isEditable) {
-          this.isEditable = false;
-          this.editableTask.text = this.task.text;
-        }
-        else {
-          this.$emit('delete', this.task);
-        }
+      closeEditMode() {
+        this.isEditable = false;
       },
+
+      closeEditModeAndSetOldValue() {
+        this.closeEditMode();
+        this.editableTask.text = this.task.text;
+      },
+
+      editItem() {
+        this.closeEditMode();
+        this.$emit('edit', { ...this.editableTask });
+      },
+      deleteItem() {
+        this.$emit('delete', this.task);
+      },
+
       setTaskInfo(value) {
         this.editableTask = Object.assign({}, value);
       }
@@ -85,5 +94,8 @@
   .task__text-wrapper {
     align-self: center;
     margin-right: 5px;
+  }
+  .task__text {
+    word-break: break-all;
   }
 </style>

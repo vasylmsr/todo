@@ -4,6 +4,7 @@ import Vuex from "vuex"
 Vue.use(Vuex);
 
 const findIndexById = (arr, id) => arr.findIndex(el => el.id === id);
+const getUniqueId = () => new Date().getTime() + String(Math.random());
 
 export const store = {
   state: {
@@ -24,7 +25,7 @@ export const store = {
     ADD_NEW_TASK(state, taskText) {
       if(taskText && taskText.length) {
         state.tasks.push({
-          id: state.tasks.length && state.tasks[state.tasks.length - 1].id + 1 || 1,
+          id: getUniqueId(),
           text: taskText
         });
       }
@@ -46,14 +47,14 @@ export const store = {
   actions: {
     fetchTasks({ commit }){
       // Imitation of asynchronous operation
-      return new Promise((resolve) => {
+      return new Promise(resolve => {
         setTimeout(() => {
           resolve([
             {
-              id: 1, text: "First task"
+              id: getUniqueId(), text: "First task"
             },
             {
-              id: 2, text: "Second task"
+              id: getUniqueId(), text: "Second task"
             }
           ])
         }, 1500)
@@ -62,7 +63,6 @@ export const store = {
         commit('SET_TASKS', data);
       })
     }
-
   }
 };
 

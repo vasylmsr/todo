@@ -51,10 +51,10 @@ export const store = {
         setTimeout(() => {
           resolve([
             {
-              id: getUniqueId(), text: "First task"
+              id: getUniqueId(), text: "First task", done: false
             },
             {
-              id: getUniqueId(), text: "Second task"
+              id: getUniqueId(), text: "Second task", done: false
             }
           ])
         }, 1500)

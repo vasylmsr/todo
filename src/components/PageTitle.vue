@@ -1,10 +1,8 @@
 <template>
-  <el-row>
-    <el-col class="title-text">
-      <h1>Todo application</h1>
-      <h2>Mysiura Vasyl (Test)</h2>
-    </el-col>
-  </el-row>
+  <div class="title-text">
+    <h1>Todo application</h1>
+    <h2>Mysiura Vasyl</h2>
+  </div>
 </template>
 
 <script>

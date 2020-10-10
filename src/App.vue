@@ -1,48 +1,44 @@
 <template>
-  <div>
-    <page-title />
+  <div class="app">
+    <div class="app__body">
+      <page-title />
 
-    <el-row type="flex" justify="space-between" class="panel">
-      <el-col :xs="24" :sm="16">
-        <el-row type="flex" class="panel__buttons">
-            <el-button id="button--green" type="primary" @click="toggleVisibilityOfNewTaskForm">
-              Create New Task
-            </el-button>
-            <el-button type="danger" @click="DELETE_ALL_TASKS">
-              Delete All
-            </el-button>
-        </el-row>
-      </el-col>
+      <div class="panel__buttons">
+        <base-button id="button--green" type="primary" @click="toggleVisibilityOfNewTaskForm">
+          Create New Task
+        </base-button>
+        <base-button type="danger" @click="DELETE_ALL_TASKS">
+          Delete All
+        </base-button>
+      </div>
 
+      <transition name="show-hide">
+        <add-task
+          v-if="isVisibleNewTaskForm"
+          @save="ADD_NEW_TASK"
+          class="add-item"
+        />
+      </transition>
 
-      <el-col :xs="24" :sm="8">
-        <el-input
-            class="search-input"
-            v-model="searchText"
-            placeholder="Search for...">
-          <i slot="prefix" class="el-input__icon el-icon-search"></i>
-        </el-input>
-      </el-col>
-    </el-row>
+      <base-input
+        class="search-input"
+        v-model="searchText"
+        placeholder="Search for..."
+      >
+        <search-icon slot="prefix" color="#c0c4cc" width="15px" />
+      </base-input>
 
-    <transition name="show-hide">
-      <add-task
-        v-if="isVisibleNewTaskForm"
-        @save="ADD_NEW_TASK"
-        class="add-item"
-      />
-    </transition>
-
-    <transition-group name="show-hide" tag="div" class="tasks">
-      <task-item
-        v-for="(task, index) in sortedTasks"
-        :key="task.id"
-        :task="task"
-        :index="index"
-        @edit="UPDATE_TASK"
-        @delete="DELETE_TASK"
-      />
-    </transition-group>
+      <transition-group name="show-hide" tag="div" class="tasks">
+        <task-item
+          v-for="(task, index) in sortedTasks"
+          :key="task.id"
+          :task="task"
+          :index="index"
+          @edit="UPDATE_TASK"
+          @delete="DELETE_TASK"
+        />
+      </transition-group>
+    </div>
   </div>
 </template>
 
@@ -51,6 +47,9 @@ import PageTitle from "./components/PageTitle";
 import TaskItem from "./components/TaskItem";
 import AddTask from "./components/AddTask";
 import { mapGetters, mapActions, mapMutations } from 'vuex';
+import BaseButton from "./components/UI/BaseButton";
+import BaseInput from "./components/UI/BaseInput";
+import SearchIcon from "./components/UI/icons/SearchIcon";
 
 function sortTasksByText(arr) {
   return Object.assign([], arr).sort((a,b) => {
@@ -65,6 +64,9 @@ function sortTasksByText(arr) {
 export default {
   name: 'App',
   components: {
+    SearchIcon,
+    BaseInput,
+    BaseButton,
     TaskItem,
     AddTask,
     PageTitle
@@ -99,6 +101,18 @@ export default {
 </script>
 
 <style lang="scss">
+  .app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .app__body {
+    max-width: 700px;
+    width: 100%;
+  }
+
   .tasks {
     margin-top: 50px;
   }
@@ -109,7 +123,13 @@ export default {
   }
 
   .add-item {
-    margin-top: 20px;
+    margin: 20px 0;
+  }
+
+  .panel__buttons {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px;
   }
 
   @media only screen and (max-width: 768px) {

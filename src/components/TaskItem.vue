@@ -1,45 +1,50 @@
 <template>
-  <el-row type="flex" class="task">
-    <el-col class="task__text-wrapper" :span="10">
-      <text-input
+  <div class="task">
+    <div class="task__text-wrapper">
+      <base-checkbox class="task__checkbox" :value="task.done" @input="handleCheckboxClick" />
+      <base-input
         v-if="isEditable"
-        v-model="editableTask.text"
+        v-model="editableTaskText"
       />
       <span
         v-else
-        class="task__text"
+        :class="['task__text', {'task__text--done': task.done}]"
       >
         {{ task.text }}
       </span>
-    </el-col>
-    <el-col>
+    </div>
+    <div class="task__controls">
       <template v-if="isEditable">
-        <el-button type="success" @click="editItem">
+        <base-button type="success" @click="editItemText">
           Save
-        </el-button>
-        <el-button type="warning" @click="closeEditModeAndSetOldValue">
+        </base-button>
+        <base-button type="warning" @click="closeEditModeAndSetOldValue">
           Cancel
-        </el-button>
+        </base-button>
       </template>
 
       <template v-else>
-        <el-button type="success" @click="openEditMode">
+        <base-button type="success" @click="openEditMode">
           Edit
-        </el-button>
-        <el-button type="danger" @click="deleteItem">
+        </base-button>
+        <base-button type="danger" @click="deleteItem">
           Delete
-        </el-button>
+        </base-button>
       </template>
-    </el-col>
-  </el-row>
+    </div>
+  </div>
 </template>
 
 <script>
-  import TextInput from "./UI/TextInput";
+  import BaseInput from "./UI/BaseInput";
+  import BaseButton from "./UI/BaseButton";
+  import BaseCheckbox from "./UI/BaseCheckbox";
   export default {
     name: "TaskItem",
     components: {
-      TextInput
+      BaseCheckbox,
+      BaseInput,
+      BaseButton
     },
     props: {
       task: {
@@ -49,7 +54,7 @@
     },
     data() {
       return {
-        editableTask: null,
+        editableTaskText: '',
         isEditable: false
       }
     },
@@ -60,42 +65,79 @@
       closeEditMode() {
         this.isEditable = false;
       },
-
+      editItem(newValue) {
+        this.$emit('edit', { ...this.task, ...newValue });
+      },
       closeEditModeAndSetOldValue() {
         this.closeEditMode();
-        this.editableTask.text = this.task.text;
+        this.editableTaskText = this.task.text;
       },
-
-      editItem() {
+      editItemText() {
         this.closeEditMode();
-        this.$emit('edit', { ...this.editableTask });
+        this.editItem({text: this.editableTaskText});
+      },
+      handleCheckboxClick(done) {
+        this.editItem({done});
       },
       deleteItem() {
         this.$emit('delete', this.task);
       },
-
       setTaskInfo(value) {
-        this.editableTask = Object.assign({}, value);
-      }
+        this.editableTaskText = value
+      },
+
     },
     created() {
-      this.setTaskInfo(this.task);
+      this.setTaskInfo(this.task.text);
     }
   }
 </script>
 
 <style scoped lang="scss">
   .task {
+    display: flex;
+    justify-content: space-between;
     border: 1px solid #dcdfe6;
     padding: 10px;
     margin-bottom: -1px;
     border-radius: 2px;
   }
+
+  .task__controls {
+    display: flex;
+  }
+
   .task__text-wrapper {
-    align-self: center;
+    display: flex;
+    align-items: center;
     margin-right: 5px;
   }
+
+  .task__checkbox {
+    margin-right: 10px;
+  }
+
   .task__text {
     word-break: break-all;
+
+    &--done {
+      text-decoration: line-through;
+    }
+  }
+
+  @media screen and (max-width: 700px){
+    .task {
+      display: flex;
+      flex-direction: column;
+
+
+      &__text-wrapper {
+        padding: 30px 0;
+      }
+
+      &__controls {
+        justify-content: space-around;
+      }
+    }
   }
 </style>

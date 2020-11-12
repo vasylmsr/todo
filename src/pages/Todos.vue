@@ -1,48 +1,50 @@
 <template>
   <div>
     <div class="panel__buttons">
-      <base-button id="button--green" type="primary" @click="toggleVisibilityOfNewTaskForm">
-        Create New Task
+      <base-button id="button--green" type="primary" @click="toggleVisibilityOfNewTodoForm">
+        Create New Todo
       </base-button>
-      <base-button type="danger" @click="DELETE_ALL_TASKS">
+      <base-button type="danger" @click="DELETE_ALL_TODOS">
         Delete All
       </base-button>
     </div>
 
     <transition name="show-hide">
-      <add-task
-              v-if="isVisibleNewTaskForm"
-              @save="ADD_NEW_TASK"
-              class="add-item"
+      <add-todo
+        v-if="isVisibleNewTodoForm"
+        @save="ADD_NEW_TODO"
+        class="add-item"
       />
     </transition>
 
     <base-input
-            class="search-input"
-            v-model="searchText"
-            placeholder="Search for..."
+      class="search-input"
+      v-model="searchText"
+      placeholder="Search for..."
     >
       <search-icon slot="prefix" color="#c0c4cc" width="15px" />
     </base-input>
 
-    <tasks-list
-      :tasks="sortedTasks"
-      @edit="UPDATE_TASK"
-      @delete="DELETE_TASK"
+    <todos-list
+      :todos="sortedTodos"
+      @edit="UPDATE_TODO"
+      @delete="DELETE_TODO"
+      @view="goToTodoPage"
     />
   </div>
 </template>
 
 <script>
-import AddTask from "../components/AddTask";
+import AddTodo from "../components/AddTodo";
 import { mapGetters, mapActions, mapMutations } from 'vuex';
 import BaseButton from "../components/UI/BaseButton";
 import BaseInput from "../components/UI/BaseInput";
 import SearchIcon from "../components/UI/icons/SearchIcon";
-import TasksList from "../components/tasksList/TasksList";
+import TodosList from "../components/todosList/TodoList";
+import {getSingleTodoUrl} from "../utils/helpers";
 
 
-function sortTasksByText(arr) {
+function sortTodosByText(arr) {
   return Object.assign([], arr).sort((a,b) => {
     a = a.title.toLowerCase();
     b = b.title.toLowerCase();
@@ -55,43 +57,46 @@ function sortTasksByText(arr) {
 export default {
   name: "Main",
   components: {
-    TasksList,
+    TodosList,
     SearchIcon,
     BaseInput,
     BaseButton,
-    AddTask,
+    AddTodo,
   },
   data() {
     return {
       searchText: '',
-      isVisibleNewTaskForm: false
+      isVisibleNewTodoForm: false
     }
   },
   computed: {
-    ...mapGetters(['tasks']),
-    sortedTasks() {
-      if (!this.searchText.length) return this.sortTasksByText(this.tasks);
-      let foundTasksByText = this.tasks.filter(task =>
-        task.title.toLowerCase().indexOf(this.searchText.toLowerCase()) >= 0 && task);
-      return this.sortTasksByText(foundTasksByText);
+    ...mapGetters(['todos']),
+    sortedTodos() {
+      if (!this.searchText.length) return this.sortTodosByText(this.todos);
+      let foundTodosByText = this.todos.filter(todo =>
+        todo.title.toLowerCase().indexOf(this.searchText.toLowerCase()) >= 0 && todo);
+      return this.sortTodosByText(foundTodosByText);
     }
   },
   methods: {
-    ...mapMutations(['ADD_NEW_TASK', 'UPDATE_TASK', 'DELETE_TASK', 'DELETE_ALL_TASKS']),
-    ...mapActions(['fetchTasks']),
-    toggleVisibilityOfNewTaskForm() {
-      this.isVisibleNewTaskForm = !this.isVisibleNewTaskForm;
+    ...mapMutations(['ADD_NEW_TODO', 'UPDATE_TODO', 'DELETE_TODO', 'DELETE_ALL_TODOS']),
+    ...mapActions(['fetchTodos']),
+    toggleVisibilityOfNewTodoForm() {
+      this.isVisibleNewTodosForm = !this.isVisibleNewTodosForm;
     },
-    sortTasksByText
+    goToTodoPage(todo) {
+      this.$router.push(`/todo/${getSingleTodoUrl(todo.id, todo.title)}`);
+    },
+    sortTodosByText
   },
   async created() {
-    await this.fetchTasks();
+    await this.fetchTodos();
   }
 }
 </script>
 
 <style scoped lang="scss">
-  .tasks {
+  .todos {
     margin-top: 50px;
   }
 

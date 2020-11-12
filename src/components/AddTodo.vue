@@ -9,7 +9,7 @@
 <script>
 import BaseInput from "./UI/BaseInput";
 export default {
-  name: "AddTask",
+  name: "AddTodo",
   components: {BaseInput},
   data() {
     return {

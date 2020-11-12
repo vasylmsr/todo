@@ -3,38 +3,43 @@
    'input--prefix': $slots.prefix,
   }]">
     <span v-if="$slots.prefix" class="input__prefix"><slot name="prefix"></slot></span>
-    <input class="input__inner" v-bind="$attrs" v-model="localValue" @keypress.enter="handleEnter"/>
+    <input
+      v-bind="$attrs"
+      v-model="localValue"
+      class="input__inner"
+      @keypress.enter="handleEnter"
+    />
   </div>
 </template>
 
 <script>
-  export default {
-    name: "BaseInput",
-    props: {
-      value: {
-        type: [Number, String],
-        required: true,
-      }
-    },
-    computed: {
-      localValue: {
-        get() {
-          return this.value;
-        },
-        set(newValue) {
-          this.emitValue(newValue)
-        }
-      }
-    },
-    methods: {
-      emitValue(newValue) {
-        this.$emit('input', newValue)
+export default {
+  name: "BaseInput",
+  props: {
+    value: {
+      type: [Number, String],
+      required: true,
+    }
+  },
+  computed: {
+    localValue: {
+      get() {
+        return this.value;
       },
-      handleEnter() {
-        this.$emit('enter')
+      set(newValue) {
+        this.emitValue(newValue)
       }
     }
+  },
+  methods: {
+    emitValue(newValue) {
+      this.$emit('input', newValue)
+    },
+    handleEnter() {
+      this.$emit('enter')
+    }
   }
+}
 </script>
 
 <style scope lang="scss">

@@ -1,7 +1,13 @@
 <template>
-  <div class="title-text">
-    <h1>Todo application</h1>
-    <h2>Mysiura Vasyl</h2>
+  <div>
+    <div class="title-text">
+      <h1>Todo application</h1>
+      <h2>Mysiura Vasyl</h2>
+    </div>
+
+    <div>
+      <slot></slot>
+    </div>
   </div>
 </template>
 

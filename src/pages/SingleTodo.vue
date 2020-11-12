@@ -1,11 +1,11 @@
 <template>
-  $END$
+  <div></div>
 </template>
 
 <script>
-  export default {
-    name: "SingleTodo"
-  }
+export default {
+  name: "SingleTodo",
+}
 </script>
 
 <style scoped>

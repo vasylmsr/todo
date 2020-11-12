@@ -1,67 +1,54 @@
 import Vue from "vue"
 import Vuex from "vuex"
+import {getTodos} from "../api/fakeApi";
+import {getUniqueId} from "../utils/helpers";
 
 Vue.use(Vuex);
 
 const findIndexById = (arr, id) => arr.findIndex(el => el.id === id);
-const getUniqueId = () => new Date().getTime() + String(Math.random());
 
 export const store = {
   state: {
-    tasks: []
+    todos: []
   },
 
   getters: {
-    tasks(state) {
-      return state.tasks;
+    todos(state) {
+      return state.todos;
     }
   },
 
   mutations: {
-    SET_TASKS(state, tasks) {
-      state.tasks = tasks;
+    SET_TODOS(state, todos) {
+      state.todos = todos;
     },
 
-    ADD_NEW_TASK(state, taskText) {
-      if(taskText && taskText.length) {
-        state.tasks.push({
+    ADD_NEW_TODO(state, todoText) {
+      if(todoText && todoText.length) {
+        state.todos.push({
           id: getUniqueId(),
-          text: taskText
+          title: todoText
         });
       }
     },
 
-    UPDATE_TASK(state, task) {
-      Vue.set(state.tasks, findIndexById(state.tasks, task.id), task);
+    UPDATE_TODO(state, todo) {
+      Vue.set(state.todos, findIndexById(state.todos, todo.id), todo);
     },
 
-    DELETE_TASK: (state, task) => {
-      Vue.delete(state.tasks, findIndexById(state.tasks, task.id))
+    DELETE_TODO(state, todo) {
+      Vue.delete(state.todos, findIndexById(state.todos, todo.id))
     },
 
-    DELETE_ALL_TASKS(state) {
-      state.tasks = [];
+    DELETE_ALL_TODOS(state) {
+      state.todos = [];
     }
   },
 
   actions: {
-    fetchTasks({ commit }){
-      // Imitation of asynchronous operation
-      return new Promise(resolve => {
-        setTimeout(() => {
-          resolve([
-            {
-              id: getUniqueId(), text: "First task", done: false
-            },
-            {
-              id: getUniqueId(), text: "Second task", done: false
-            }
-          ])
-        }, 1500)
-      })
-      .then(data => {
-        commit('SET_TASKS', data);
-      })
+    async fetchTodos({ commit }){
+      const todos = await getTodos();
+      commit('SET_TODOS', todos);
     }
   }
 };

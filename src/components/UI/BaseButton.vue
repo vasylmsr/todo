@@ -1,7 +1,12 @@
 <template>
-  <button :class="['button', {
-    [`button--${type}`]: type,
-  }]" v-bind="$attrs" @click="$emit('click')">
+  <button
+    v-bind="$attrs"
+    @click="$emit('click')"
+    :style="{ width: fullWidth ? '100%' : 'auto'}"
+    :class="['button', {
+      [`button--${type}`]: type,
+    }]"
+    >
     <slot></slot>
   </button>
 </template>
@@ -10,6 +15,10 @@
   export default {
     name: "BaseButton",
     props: {
+      fullWidth: {
+        type: Boolean,
+        default: false,
+      },
       type: {
         type: String,
         validator: function (value) {
@@ -42,10 +51,6 @@
     font-size: 14px;
     border-radius: 4px;
 
-  }
-
-  .button+.button {
-    margin-left: 10px;
   }
 
   @mixin buttonType($colorName, $color) {

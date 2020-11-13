@@ -9,4 +9,9 @@ export default [
     name: 'todo',
     component: () => import('../pages/SingleTodo'),
   },
+  {
+    path: '*',
+    name: 'not-found',
+    component: () => import('../pages/NotFound'),
+  },
 ]

@@ -85,12 +85,12 @@ export default {
       this.isVisibleNewTodosForm = !this.isVisibleNewTodosForm;
     },
     goToTodoPage(todo) {
-      this.$router.push(`/todo/${getSingleTodoUrl(todo.id, todo.title)}`);
+      this.$router.push(`/todos/${getSingleTodoUrl(todo.id, todo.title)}`);
     },
     sortTodosByText
   },
-  async created() {
-    await this.fetchTodos();
+  created() {
+    this.fetchTodos();
   }
 }
 </script>

@@ -24,4 +24,13 @@ function makeFakeRequest(data){
 }
 
 export const getTodos = () => makeFakeRequest(todos);
-export const getTodo = (todoId) => makeFakeRequest(todos.find(todo => todo === todoId));
+export const getTodo = (todoId) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const todo = todos.find(todo => todo === todoId)
+      if(todo) resolve(todo);
+      reject({ status: 404, message: 'Todo not found' });
+    }, 1000)
+  })
+
+}

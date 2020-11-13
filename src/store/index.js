@@ -1,6 +1,6 @@
 import Vue from "vue"
 import Vuex from "vuex"
-import {getTodos} from "../api/fakeApi";
+import {getTodo, getTodos} from "../api/fakeApi";
 import {getUniqueId} from "../utils/helpers";
 
 Vue.use(Vuex);
@@ -9,7 +9,10 @@ const findIndexById = (arr, id) => arr.findIndex(el => el.id === id);
 
 export const store = {
   state: {
-    todos: []
+    todos: [],
+
+    currentTodo: {},
+    fetchingTodoError: null,
   },
 
   getters: {
@@ -42,6 +45,14 @@ export const store = {
 
     DELETE_ALL_TODOS(state) {
       state.todos = [];
+    },
+
+    SET_CURRENT_TODO(state, todo) {
+      state.currentTodo = todo;
+    },
+
+    SET_FETCHING_TODO_ERROR(state, error) {
+      state.fetchingTodoError = error;
     }
   },
 
@@ -49,7 +60,20 @@ export const store = {
     async fetchTodos({ commit }){
       const todos = await getTodos();
       commit('SET_TODOS', todos);
-    }
+    },
+
+    async fetchTodo({ commit, state }, todoId) {
+      let foundTodo = state.todos.find(todo => todo.id === todoId);
+      if(foundTodo) { commit('SET_CURRENT_TODO', foundTodo) }
+      else {
+        try {
+          const response = await getTodo(todoId);
+          commit('SET_CURRENT_TODO', response);
+        } catch(error) {
+          commit('SET_FETCHING_TODO_ERROR', error);
+        }
+      }
+    },
   }
 };
 

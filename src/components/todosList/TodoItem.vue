@@ -6,10 +6,13 @@
     </div>
 
     <div class="todo__controls">
-      <div style="display: flex; margin-bottom: 8px">
-        <base-checkbox class="todo__checkbox" :value="todo.done" @input="handleCheckboxClick" />
-        <span>{{todo.done ? 'Done' : 'Undone'}}</span>
-      </div>
+      <checkbox-field
+        :value="todo.done"
+        @input="handleCheckboxClick"
+      >
+        {{todo.done ? 'Done' : 'Undone'}}
+      </checkbox-field>
+
       <div class="todo__edit-buttons">
         <base-button type="primary" @click="$emit('editClick', todo)">
           Edit
@@ -26,13 +29,14 @@
 </template>
 
 <script>
-import BaseCheckbox from "../UI/BaseCheckbox";
 import BaseButton from "../UI/BaseButton";
+import CheckboxField from "@/components/UI/checkbox/CheckboxField";
+
 export default {
   name: "TodoItem",
   components: {
+    CheckboxField,
     BaseButton,
-    BaseCheckbox,
   },
   props: {
     todo: {
@@ -54,7 +58,6 @@ export default {
     flex-direction: column;
     border: 1px solid #dcdfe6;
     padding: 10px;
-    margin-bottom: -1px;
     border-radius: 2px;
     word-break: break-all;
 
@@ -74,18 +77,25 @@ export default {
       display: grid;
       grid-template-columns: max-content max-content max-content;
       grid-gap: 10px;
+      margin-top: 15px;
     }
 
     &__view-btn {
       margin-top: 10px;
     }
-  }
 
+    &__title {
+      word-break: break-all;
 
+      &--done {
+        text-decoration: line-through;
+      }
+    }
 
-  .todo__controls {
-    /*display: flex;*/
-    margin-top: auto;
+    &__controls {
+      padding-top: 15px;
+      margin-top: auto;
+    }
   }
 
   .todo__text-wrapper {
@@ -94,31 +104,4 @@ export default {
     margin-right: 5px;
   }
 
-  .todo__checkbox {
-    margin-right: 10px;
-  }
-
-  .todo__text {
-    word-break: break-all;
-
-    &--done {
-      text-decoration: line-through;
-    }
-  }
-
-  @media screen and (max-width: 700px){
-    .todo {
-      display: flex;
-      flex-direction: column;
-
-
-      &__text-wrapper {
-        padding: 30px 0;
-      }
-
-      &__controls {
-        justify-content: space-around;
-      }
-    }
-  }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="todo">
+  <base-card class="todo">
     <div>
       <div class="todo__title">{{todo.title}}</div>
       <div class="todo__author">by {{'Vasyl Mysiura'}}</div>
@@ -25,16 +25,18 @@
         </base-button>
       </div>
     </div>
-  </div>
+  </base-card>
 </template>
 
 <script>
 import BaseButton from "../UI/BaseButton";
 import CheckboxField from "@/components/UI/checkbox/CheckboxField";
+import BaseCard from "../UI/BaseCard";
 
 export default {
   name: "TodoItem",
   components: {
+    BaseCard,
     CheckboxField,
     BaseButton,
   },
@@ -56,9 +58,6 @@ export default {
   .todo {
     display: flex;
     flex-direction: column;
-    border: 1px solid #dcdfe6;
-    padding: 10px;
-    border-radius: 2px;
     word-break: break-all;
 
     &__title {

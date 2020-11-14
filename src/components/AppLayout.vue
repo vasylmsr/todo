@@ -1,13 +1,13 @@
 <template>
   <div>
-    <div class="title-text">
-      <h1>Todo application</h1>
+    <header class="header">
+      <h1 class="header__title">Todo application</h1>
       <h2>Mysiura Vasyl</h2>
-    </div>
+    </header>
 
-    <div>
+    <main>
       <slot></slot>
-    </div>
+    </main>
   </div>
 </template>
 
@@ -17,8 +17,12 @@
   }
 </script>
 
-<style scoped>
- .title-text {
+<style scoped lang="scss">
+ .header {
    text-align: center;
+   &__title {
+     font-size: 20px;
+     font-weight: 600;
+   }
  }
 </style>

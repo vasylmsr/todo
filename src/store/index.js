@@ -26,13 +26,11 @@ export const store = {
       state.todos = todos;
     },
 
-    ADD_NEW_TODO(state, todoText) {
-      if(todoText && todoText.length) {
-        state.todos.push({
-          id: getUniqueId(),
-          title: todoText
-        });
-      }
+    ADD_NEW_TODO(state, todo) {
+      state.todos.push({
+        id: getUniqueId(),
+        ...todo,
+      });
     },
 
     UPDATE_TODO(state, todo) {

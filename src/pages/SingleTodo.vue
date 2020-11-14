@@ -1,18 +1,28 @@
 <template>
-  <div>
+  <div class="todo">
     <div v-if="!currentTodo.id" style="display: flex; justify-content: center">Loading...</div>
-    <div v-else>
-       <div style="text-align: center">{{currentTodo.title}}</div>
-       <div>{{currentTodo.description}}</div>
-    </div>
+    <base-card v-else>
+      <div class="todo__title-wrapper">
+        <h1 class="todo__title">{{currentTodo.title}}</h1>
+      </div>
+      <hr class="separator" />
+
+      <div class="todo__description">
+        {{currentTodo.description}}
+      </div>
+
+      <hr class="separator" />
+    </base-card>
   </div>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex';
+import BaseCard from "../components/UI/BaseCard";
 
 export default {
   name: "SingleTodo",
+  components: {BaseCard},
   computed: {
     ...mapState(['currentTodo', 'fetchingTodoError']),
   },
@@ -35,6 +45,27 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+  .todo {
+    word-break: break-word;
 
+    &__title-wrapper {
+      margin: 10px 0 15px;
+    }
+
+    &__title {
+      font-size: 16px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    &__description {
+      text-indent: 20px;
+      line-height: 25px;
+    }
+  }
+
+  .separator {
+    padding: 5px 0;
+  }
 </style>

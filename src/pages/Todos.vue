@@ -1,7 +1,10 @@
 <template>
   <div>
     <div class="panel__buttons">
-      <base-button id="button--green" type="primary" @click="toggleVisibilityOfNewTodoForm">
+      <base-button
+        type="primary"
+        @click="toggleAddTodoForm"
+      >
         Create New Todo
       </base-button>
       <base-button type="danger" @click="DELETE_ALL_TODOS">
@@ -12,7 +15,7 @@
     <transition name="show-hide">
       <add-todo
         v-if="isVisibleNewTodoForm"
-        @save="ADD_NEW_TODO"
+        @save="saveTodo"
         class="add-item"
       />
     </transition>
@@ -35,14 +38,13 @@
 </template>
 
 <script>
-import AddTodo from "../components/AddTodo";
+import AddTodo from "../components/TodoForm";
 import { mapGetters, mapActions, mapMutations } from 'vuex';
 import BaseButton from "../components/UI/BaseButton";
 import BaseInput from "../components/UI/BaseInput";
 import SearchIcon from "../components/UI/icons/SearchIcon";
 import TodosList from "../components/todosList/TodoList";
 import {getSingleTodoUrl} from "../utils/helpers";
-
 
 function sortTodosByText(arr) {
   return Object.assign([], arr).sort((a,b) => {
@@ -81,11 +83,16 @@ export default {
   methods: {
     ...mapMutations(['ADD_NEW_TODO', 'UPDATE_TODO', 'DELETE_TODO', 'DELETE_ALL_TODOS']),
     ...mapActions(['fetchTodos']),
-    toggleVisibilityOfNewTodoForm() {
-      this.isVisibleNewTodosForm = !this.isVisibleNewTodosForm;
+    toggleAddTodoForm() {
+      this.isVisibleNewTodoForm = !this.isVisibleNewTodoForm;
     },
     goToTodoPage(todo) {
       this.$router.push(`/todos/${getSingleTodoUrl(todo.id, todo.title)}`);
+    },
+    saveTodo(todo) {
+      this.ADD_NEW_TODO(todo);
+      alert('Todo is saved');
+      this.toggleAddTodoForm();
     },
     sortTodosByText
   },

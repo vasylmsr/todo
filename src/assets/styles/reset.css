@@ -1,7 +1,6 @@
 @charset "UTF-8";
 body{
-    font-family:"Helvetica Neue",
-    Helvetica,"PingFang SC",
+    font-family: Helvetica,"PingFang SC",
     "Hiragino Sans GB",
     "Microsoft YaHei";
     font-weight:400;
@@ -43,8 +42,6 @@ small {
 }
 
 hr {
-    margin-top:20px;
-    margin-bottom:20px;
     border:0;
-    border-top:1px solid #eee
+    border-top:1px solid #eee;
 }

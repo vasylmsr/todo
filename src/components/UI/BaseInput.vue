@@ -44,6 +44,7 @@ export default {
 
 <style scope lang="scss">
   @import "../../assets/styles/variables";
+  @import "./inputStyles";
 
   .input {
     position: relative;
@@ -59,25 +60,13 @@ export default {
       box-sizing: border-box;
       color: #606266;
       display: inline-block;
-      font-size: inherit;
       height: 40px;
       line-height: 40px;
       outline: 0;
-      padding: 0 15px;
-      transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+      padding: 0 $inputPadding;
       width: 100%;
 
-      &::placeholder {
-        color: #c0c4cc;
-      }
-
-      &:focus {
-        border-color: map-get($colors, 'primary');
-      }
-
-      &:hover {
-        border-color: #c0c4cc;
-      }
+      @include inputPseudoClasses;
     }
 
     &__prefix {

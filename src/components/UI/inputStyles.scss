@@ -1,0 +1,18 @@
+@import "../../assets/styles/variables";
+
+$inputPadding: 15px;
+$inputBorderColor: #dcdfe6;
+
+@mixin inputPseudoClasses {
+  &::placeholder {
+    color: #c0c4cc;
+  }
+
+  &:focus {
+    border-color: map-get($colors, 'primary');
+  }
+
+  &:hover {
+    border-color: #c0c4cc;
+  }
+}

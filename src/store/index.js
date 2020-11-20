@@ -12,6 +12,7 @@ export const store = {
     todos: [],
 
     currentTodo: {},
+    currentTodoLoading: false,
     fetchingTodoError: null,
   },
 
@@ -51,6 +52,10 @@ export const store = {
 
     SET_FETCHING_TODO_ERROR(state, error) {
       state.fetchingTodoError = error;
+    },
+
+    SET_CURRENT_TODO_LOADING(state, status) {
+      state.currentTodoLoading = status;
     }
   },
 
@@ -65,10 +70,13 @@ export const store = {
       if(foundTodo) { commit('SET_CURRENT_TODO', foundTodo) }
       else {
         try {
+          commit('SET_CURRENT_TODO_LOADING', true);
           const response = await getTodo(todoId);
           commit('SET_CURRENT_TODO', response);
         } catch(error) {
           commit('SET_FETCHING_TODO_ERROR', error);
+        } finally {
+          commit('SET_CURRENT_TODO_LOADING', false);
         }
       }
     },

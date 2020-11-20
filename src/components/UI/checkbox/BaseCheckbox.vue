@@ -1,12 +1,11 @@
 <template>
   <label class="base-checkbox">
     <input
+      v-model="localValue"
       type="checkbox"
       class="base-checkbox__input"
       ref="checkbox"
       :name="name"
-      :value="checkboxValue"
-      v-model="localValue"
     />
     <span class="base-checkbox__icon"></span>
   </label>

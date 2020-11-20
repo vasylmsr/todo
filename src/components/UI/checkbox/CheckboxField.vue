@@ -1,6 +1,6 @@
 <template>
   <label class="checkbox-field">
-    <base-checkbox v-model="localValue" />
+    <base-checkbox v-model="localValue"/>
     <div class="checkbox-field__label">
       <slot></slot>
     </div>
@@ -11,8 +11,11 @@
 import BaseCheckbox from "@/components/UI/checkbox/BaseCheckbox";
 
 export default {
-name: "CheckboxField",
+  name: "CheckboxField",
   components: {BaseCheckbox},
+  props: {
+    value: [String, Number],
+  },
   computed: {
     localValue: {
       get() {

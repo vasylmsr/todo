@@ -2,7 +2,7 @@
   <base-card class="todo">
     <div>
       <div class="todo__title">{{todo.title}}</div>
-      <div class="todo__author">by {{'Vasyl Mysiura'}}</div>
+      <div class="todo__author">by {{todo.author}}</div>
     </div>
 
     <div class="todo__controls">

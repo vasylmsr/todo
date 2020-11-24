@@ -4,7 +4,7 @@
       <h1 class="todo__title">{{todo.title}}</h1>
       <div :class="['todo__status', {
         'todo__status--done': todo.done,
-         'todo__status--undone': !todo.done
+        'todo__status--undone': !todo.done
       }]">
         {{ todo.done ? 'Done' : 'Undone' }}
       </div>
@@ -14,10 +14,6 @@
     <div class="todo__description">
       {{todo.description}}
     </div>
-
-    <hr class="separator" />
-
-
 
     <hr class="separator" />
 

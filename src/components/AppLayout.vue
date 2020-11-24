@@ -1,28 +1,45 @@
 <template>
-  <div>
-    <header class="header">
-      <h1 class="header__title">Todo application</h1>
-      <h2>Mysiura Vasyl</h2>
-    </header>
+  <div class="app-layout">
+    <Header class="app-layout__header"/>
 
-    <main>
+    <main class="app-layout__main">
       <slot></slot>
     </main>
+
+    <Footer class="app-layout__footer"/>
   </div>
 </template>
 
 <script>
+  import Header from "./Header";
+  import Footer from "./Footer";
   export default {
-    name: "PageTitle"
+    name: "PageTitle",
+    components: {Footer, Header}
   }
 </script>
 
 <style scoped lang="scss">
- .header {
-   text-align: center;
-   &__title {
-     font-size: 20px;
-     font-weight: 600;
+ .app-layout {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   min-height: 100vh;
+   width: 100%;
+
+   &__main {
+     flex: 1 1 auto;
+     width: 100%;
+     max-width: 800px;
+     margin: 30px 0;
+   }
+
+   &__footer, &__header {
+     width: 100%;
+   }
+
+   &__footer {
+     margin-top: auto;
    }
  }
 </style>

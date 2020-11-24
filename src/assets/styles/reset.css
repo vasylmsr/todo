@@ -6,6 +6,8 @@ body{
     font-weight:400;
     font-size:14px;
     color:#000;
+    margin: 0;
+    padding: 0;
 }
 
 a {
@@ -43,5 +45,5 @@ small {
 
 hr {
     border:0;
-    border-top:1px solid #eee;
+    border-top:1px solid rgba(0,0,0,0.1);
 }

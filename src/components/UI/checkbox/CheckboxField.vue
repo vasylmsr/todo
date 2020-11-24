@@ -14,7 +14,7 @@ export default {
   name: "CheckboxField",
   components: {BaseCheckbox},
   props: {
-    value: [String, Number],
+    value: [Array, Boolean],
   },
   computed: {
     localValue: {

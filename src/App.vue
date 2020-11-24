@@ -1,10 +1,8 @@
 <template>
   <div class="app">
-    <div class="app__body">
-      <app-layout>
-        <router-view></router-view>
-      </app-layout>
-    </div>
+    <app-layout>
+      <router-view></router-view>
+    </app-layout>
   </div>
 </template>
 

@@ -26,10 +26,10 @@
 </template>
 
 <script>
-import BaseInput from "./UI/BaseInput";
-import BaseTextarea from "./UI/BaseTextarea";
-import BaseCard from "./UI/BaseCard";
-import BaseButton from "./UI/BaseButton";
+import BaseInput from "../UI/BaseInput";
+import BaseTextarea from "../UI/BaseTextarea";
+import BaseCard from "../UI/BaseCard";
+import BaseButton from "../UI/BaseButton";
 export default {
   name: "TodoForm",
   components: {BaseButton, BaseCard, BaseTextarea, BaseInput},

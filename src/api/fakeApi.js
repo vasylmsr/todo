@@ -9,7 +9,7 @@ const todos = [
   {
     id: 2,
     title: "React is the best JS framework",
-    description: 'Bla',
+    description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been...',
     author: 'Facebook',
     done: false
   }

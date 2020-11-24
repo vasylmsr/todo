@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import AddTodo from "../components/TodoForm";
+import AddTodo from "../components/forms/TodoForm";
 import { mapGetters, mapActions, mapMutations } from 'vuex';
 import BaseButton from "../components/UI/BaseButton";
 import BaseInput from "../components/UI/BaseInput";
@@ -76,7 +76,7 @@ export default {
     sortedTodos() {
       if (!this.searchText.length) return this.sortTodosByText(this.todos);
       let foundTodosByText = this.todos.filter(todo =>
-        todo.title.toLowerCase().indexOf(this.searchText.toLowerCase()) >= 0 && todo);
+        todo.title.toLowerCase().indexOf(this.searchText.toLowerCase()) >= 0);
       return this.sortTodosByText(foundTodosByText);
     }
   },

@@ -11,7 +11,7 @@ export const store = {
   state: {
     todos: [],
 
-    currentTodo: {},
+    currentTodo: null,
     currentTodoLoading: false,
     fetchingTodoError: null,
   },
@@ -30,6 +30,7 @@ export const store = {
     ADD_NEW_TODO(state, todo) {
       state.todos.push({
         id: getUniqueId(),
+        author: 'Super User',
         ...todo,
       });
     },

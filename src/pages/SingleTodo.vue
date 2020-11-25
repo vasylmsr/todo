@@ -1,8 +1,8 @@
 <template>
   <div class="todo">
-    <div v-if="currentTodoLoading" class="todo__loading">Loading...</div>
+    <full-todo-card v-if="currentTodo" :todo="currentTodo"/>
+    <div v-else-if="currentTodoLoading" class="todo__loading">Loading...</div>
     <not-found v-else-if="notFound" />
-    <full-todo-card v-else :todo="currentTodo"/>
   </div>
 </template>
 

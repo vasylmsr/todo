@@ -5,5 +5,9 @@ export function getSingleTodoUrl(id, title = '') {
   return `${todoTitleWords.join('-').replace(/[^0-9a-z\-]/g, '')}`;
 }
 
-export const getUniqueId = () => new Date().getTime() + String(Math.round(Math.random() * 10000));
+export const getUniqueId = () => {
+  const firstPart = String(new Date().getTime()).slice(-5);
+  const secondPart = String(Math.round(Math.random() * 100000))
+  return Number(firstPart + secondPart);
+}
 

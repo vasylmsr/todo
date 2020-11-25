@@ -57,7 +57,7 @@ function sortTodosByText(arr) {
 }
 
 export default {
-  name: "Main",
+  name: "TodosPage",
   components: {
     TodosList,
     SearchIcon,

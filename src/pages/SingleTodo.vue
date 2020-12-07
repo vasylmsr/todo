@@ -10,6 +10,7 @@
 import { mapState, mapActions } from 'vuex';
 import NotFound from "@/pages/NotFound";
 import FullTodoCard from "@/components/FullTodoCard";
+import {fetchTodo} from "../store/constant";
 
 export default {
   name: "SingleTodo",
@@ -21,13 +22,13 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['fetchTodo'])
+    ...mapActions([fetchTodo])
   },
   created() {
     const todoIdParam = this.$route.params.id;
     const todoIdArrParam = todoIdParam.split('-');
     const todoId = todoIdArrParam[todoIdArrParam.length - 1];
-    this.fetchTodo(Number(todoId));
+    this[fetchTodo](Number(todoId));
   },
 }
 </script>

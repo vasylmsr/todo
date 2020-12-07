@@ -27,10 +27,9 @@ export const getTodos = () => makeFakeRequest(todos);
 export const getTodo = (todoId) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      const todo = todos.find(todo => todo.id === todoId)
+      const todo = todos.find(todo => todo.id === todoId);
       if(todo) resolve(todo);
       reject({ status: 404, message: 'Todo not found' });
     }, 1000)
   })
-
-}
+};

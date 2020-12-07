@@ -34,4 +34,12 @@ export default {
    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
    grid-gap: 10px;
  }
+
+ .show-hide-enter-active, .show-hide-leave-active {
+   transition: 0.2s;
+ }
+ .show-hide-enter, .show-hide-leave-to {
+   opacity: 0;
+   transform: translateY(-10px);
+ }
 </style>

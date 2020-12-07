@@ -7,7 +7,7 @@ export function getSingleTodoUrl(id, title = '') {
 
 export const getUniqueId = () => {
   const firstPart = String(new Date().getTime()).slice(-5);
-  const secondPart = String(Math.round(Math.random() * 100000))
+  const secondPart = String(Math.round(Math.random() * 100000));
   return Number(firstPart + secondPart);
-}
+};
 

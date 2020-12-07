@@ -14,9 +14,6 @@
       </checkbox-field>
 
       <div class="todo__edit-buttons">
-        <base-button type="primary" @click="$emit('editClick', todo)">
-          Edit
-        </base-button>
         <base-button type="danger" @click="$emit('delete', todo)">
           Delete
         </base-button>

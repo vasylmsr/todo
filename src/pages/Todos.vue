@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="panel">
     <div class="panel__buttons">
       <base-button
         type="primary"
@@ -16,12 +16,12 @@
       <add-todo
         v-if="isVisibleNewTodoForm"
         @save="saveTodo"
-        class="add-item"
+        class="panel__add-todo"
       />
     </transition>
 
     <base-input
-      class="search-input"
+      class="panel__search-input"
       v-model="searchText"
       placeholder="Search for..."
     >
@@ -45,6 +45,7 @@ import BaseInput from "../components/UI/BaseInput";
 import SearchIcon from "../components/UI/icons/SearchIcon";
 import TodosList from "../components/todosList/TodoList";
 import {getSingleTodoUrl} from "../utils/helpers";
+import {ADD_NEW_TODO, DELETE_ALL_TODOS, DELETE_TODO, fetchTodos, UPDATE_TODO} from "../store/constant";
 
 function sortTodosByText(arr) {
   return Object.assign([], arr).sort((a,b) => {
@@ -81,8 +82,8 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['ADD_NEW_TODO', 'UPDATE_TODO', 'DELETE_TODO', 'DELETE_ALL_TODOS']),
-    ...mapActions(['fetchTodos']),
+    ...mapMutations([ADD_NEW_TODO, UPDATE_TODO, DELETE_TODO, DELETE_ALL_TODOS]),
+    ...mapActions([fetchTodos]),
     toggleAddTodoForm() {
       this.isVisibleNewTodoForm = !this.isVisibleNewTodoForm;
     },
@@ -90,54 +91,41 @@ export default {
       this.$router.push(`/todos/${getSingleTodoUrl(todo.id, todo.title)}`);
     },
     saveTodo(todo) {
-      this.ADD_NEW_TODO(todo);
+      this[ADD_NEW_TODO](todo);
       alert('Todo is saved');
       this.toggleAddTodoForm();
     },
     sortTodosByText
   },
   created() {
-    this.fetchTodos();
+    this[fetchTodos]();
   }
 }
 </script>
 
 <style scoped lang="scss">
-  .todos {
-    margin-top: 50px;
-  }
-
   .panel {
-    margin-top: 30px;
-    flex-wrap: wrap;
-  }
+    &__add-todo, &__search-input {
+      margin: 20px 0;
+    }
 
-  .add-item {
-    margin: 20px 0;
-  }
-
-  .panel__buttons {
-    display: flex;
-    justify-content: space-around;
-    margin: 20px;
-  }
-
-  @media only screen and (max-width: 768px) {
-    .panel__buttons {
-      margin-bottom: 20px;
-
-      & > * {
-        width: 100%;
-        justify-content: space-between;
-      }
+    &__buttons {
+      display: flex;
+      justify-content: space-around;
+      margin: 20px;
     }
   }
 
-  .show-hide-enter-active, .show-hide-leave-active {
-    transition: 0.2s;
-  }
-  .show-hide-enter, .show-hide-leave-to {
-    opacity: 0;
-    transform: translateY(-10px);
+  @media only screen and (max-width: 768px) {
+    .panel {
+      &__buttons {
+        margin-bottom: 20px;
+
+        & > * {
+          width: 100%;
+          justify-content: space-between;
+        }
+      }
+    }
   }
 </style>

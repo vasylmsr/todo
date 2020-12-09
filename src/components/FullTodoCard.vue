@@ -6,7 +6,7 @@
         'todo__status--done': todo.done,
         'todo__status--undone': !todo.done
       }]">
-        {{ todo.done ? 'Done' : 'Undone' }}
+        {{ todo.done ? 'Done' : 'Not done' }}
       </div>
     </div>
     <hr class="separator" />

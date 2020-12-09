@@ -1,16 +1,18 @@
+import paths from "./paths";
+
 export default [
   {
-    path: '/',
+    path: paths.home,
     name: 'home',
     component: () => import('../pages/Todos'),
   },
   {
-    path: '/todos/:id',
+    path: `${paths.todos}/:id`,
     name: 'todo',
     component: () => import('../pages/SingleTodo'),
   },
   {
-    path: '*',
+    path: paths.notFound,
     name: 'not-found',
     component: () => import('../pages/NotFound'),
   },

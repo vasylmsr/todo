@@ -4,7 +4,9 @@ import routes from './routes';
 
 Vue.use(Router);
 
+const { NODE_ENV } = process.env;
+
 export default new Router({
-  mode: 'history',
+  mode: NODE_ENV === 'production' ? 'hash' : 'history', // for github pages
   routes,
 });

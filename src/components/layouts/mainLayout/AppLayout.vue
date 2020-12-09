@@ -1,6 +1,6 @@
 <template>
   <div class="app-layout">
-    <Header class="app-layout__header"/>
+    <Header class="app-layout__header" @headerClick="handleHeaderClick" />
 
     <main class="app-layout__main">
       <slot></slot>
@@ -11,12 +11,21 @@
 </template>
 
 <script>
-  import Header from "./Header";
-  import Footer from "./Footer";
-  export default {
-    name: "PageTitle",
-    components: {Footer, Header}
+import Header from "./Header";
+import Footer from "./Footer";
+import paths from "../../../router/paths";
+
+export default {
+  name: "PageTitle",
+  components: {Footer, Header},
+  methods: {
+    handleHeaderClick() {
+      if(this.$route.path !== paths.home) {
+        this.$router.push(paths.home);
+      }
+    }
   }
+}
 </script>
 
 <style scoped lang="scss">

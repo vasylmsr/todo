@@ -75,19 +75,15 @@ export const store = {
       commit(SET_TODOS, todos);
     },
 
-    async [fetchTodo]({ commit, state }, todoId) {
-      let foundTodo = state.todos.find(todo => todo.id === todoId);
-      if(foundTodo) { commit(SET_CURRENT_TODO, foundTodo) }
-      else {
-        try {
-          commit(SET_CURRENT_TODO_LOADING, true);
-          const response = await getTodo(todoId);
-          commit(SET_CURRENT_TODO, response);
-        } catch(error) {
-          commit(SET_FETCHING_TODO_ERROR, error);
-        } finally {
-          commit(SET_CURRENT_TODO_LOADING, false);
-        }
+    async [fetchTodo]({ commit }, todoId) {
+      try {
+        commit(SET_CURRENT_TODO_LOADING, true);
+        const response = await getTodo(todoId);
+        commit(SET_CURRENT_TODO, response);
+      } catch(error) {
+        commit(SET_FETCHING_TODO_ERROR, error);
+      } finally {
+        commit(SET_CURRENT_TODO_LOADING, false);
       }
     },
   }

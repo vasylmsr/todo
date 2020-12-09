@@ -1,6 +1,6 @@
 <template>
   <header class="header">
-    <div class="header__body">
+    <div class="header__body" @click="$emit('headerClick')">
       Todo app
     </div>
   </header>
@@ -27,6 +27,7 @@
       font-weight: 600;
       font-size: 20px;
       color: white;
+      cursor: pointer;
     }
   }
 </style>
